@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Functions are a way you can take little bits of your Python scripts and use them multiple times within your programs. As your code gets more complex, they become an increasing important way to hide complexity and reduce duplication in your code. You'll need to use them for the upcoming web scraping lab, and they will also be useful for keeping your code comprehensible, simple and maintainable after this course.
+Functions are a way you can take little bits of your Python scripts and reuse them multiple times within your programs. As your code gets more complex, they become an increasing important way to hide complexity and reduce duplication in your code. You'll need to use them for the upcoming web scraping lab, and they will also be useful for keeping your code comprehensible, simple and maintainable after this course.
 
 ## Objectives
 You will be able to:
@@ -105,7 +105,7 @@ Let's execute the name_of_function function.
 name_of_function()
 ```
 
-Did it work? Kinda. The lines of our function were run. But our function did not return anything. Functions are designed so that everything inside of them stay inside. So for example, even though we declared the `words` variable, `words` is not available from outside of the function.
+Did it work? Kinda. The lines of our function were run. But our function did not return anything. Functions are designed so that everything inside of them stay inside. So for example, even though we declared the `words` variable, `words` is not available from outside of the function. Note the error you get when you run the next cell . . .
 
 
 ```python
@@ -152,7 +152,7 @@ greet_employees()
 
 ## Applying Functions
 
-Let's go back to a problem we solved a few weeks ago. We had a bunch of companies with different company types, but the varying cases caused us a problem when trying to understand how many of the companies were LLC's, etc...
+ON, now we've looked at the anatomy of a function, let's apply it. Let's go back to a problem we solved a few weeks ago. We had a bunch of companies with different company types, but variations in capitalization caused us a problem when trying to understand how many of the companies were LLC's, etc...
 
 
 ```python
@@ -211,6 +211,12 @@ for key, value in replacements.items():
     df3 = replacewith(df2, "EntityType", key, value)
 df3['EntityType'].value_counts()
 ```
+
+And there we go, now we're "encapsulating" the details of *how* we `replacewith()`, meaning that if we need to change that code ever we'll only have to change it in one place. Sometimes you'll hear this referred to as DRYing up your code, referencing a concept from a classic programming book called "[The Pragmatic Programmer](https://www.amazon.com/Pragmatic-Programmer-Journeyman-Master-ebook/dp/B003GCTQAE)" which introduces the concept of DRY code (standing for Dont Repeat Yourself).
+
+## Recursive Functions
+
+OK, there is just one more concept that we need to introduce for you to be ready for the lab, and that is recursive functions (functions that call themselves).
 
 ## Summary
 
