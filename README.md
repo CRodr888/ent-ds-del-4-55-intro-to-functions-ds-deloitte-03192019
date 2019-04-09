@@ -216,8 +216,88 @@ And there we go, now we're "encapsulating" the details of *how* we `replacewith(
 
 ## Recursive Functions
 
-OK, there is just one more concept that we need to introduce for you to be ready for the lab, and that is recursive functions (functions that call themselves).
+OK, there is just one more concept that we need to introduce for you to be ready for the lab, and that is recursive functions (functions that call themselves). They take a bit of getting used to, so don't worry if this feels like a lot, but for some kinds of problems they are the only way to solve them, so it's worth taking the time to at least get familiar with the concept, even if implementing it might take a little while to get the hang of.
+
+### Why Bother?
+Why might you want to write a function that calls itself? Well, imagine you're writing a script to traverse a Python dictionary (perhaps created when importing a JSON file from an API). Lets say you want to iterate over all of the keys in the dictionary, but then do something to all of the values. Lets just take a trivial example of upper casing all of the values. So your code may look something like this:
+
+
+```python
+our_dict = {"key1": "value1",
+            "key2": "value2",
+            "key3": "value3"
+           }
+print(our_dict)
+```
+
+
+```python
+def capitalize_values(dictionary):
+    for key, value in dictionary.items():
+        dictionary[key] = dictionary[key].upper()
+    return dictionary
+
+our_dict = capitalize_values(our_dict)
+print(our_dict)
+```
+
+OK, now what happens if we have a dictionary within a dictionary? Something like this?
+
+
+```python
+our_dict2 = {"key1": "value1",
+            "key2": "value2",
+            "key3": {"keya": "valuea",
+                    "keyb": "valueb",
+                    "keyc": "valuec"
+                   }
+           }
+print(our_dict2)
+```
+
+Let's see what happens when we run our code against that. Remember, we don't need to re-define the function . - we can just reuse it...
+
+
+```python
+our_dict2 = capitalize_values(our_dict2)
+print(our_dict2)
+```
+
+Hmmm, well that error message makes sense. There is no method to `upper()` a dictionary. So what we really need to do is to write a more sophisticated function.
+
+
+```python
+def capitalize_values_recursively(dictionary):
+    for key, value in dictionary.items():
+        if type(dictionary[key]) == dict:
+            dictionary[key] = capitalize_values_recursively(dictionary[key])
+        else:
+            dictionary[key] = dictionary[key].upper()
+    return dictionary
+
+our_dict2 = capitalize_values_recursively(our_dict2)
+print(our_dict2)
+```
+
+And voila - we just wrote our first recursive function! It loops over the keys and if the value of the key is of type dict, it calls itself again. And the nice thing about recursion is that it works no matter how complex the data is. Here's an example three levels deep:
+
+
+```python
+our_dict3 = {"key1": "value1",
+            "key2": "value2",
+            "key3": {"keya": "valuea",
+                    "keyb": "valueb",
+                    "keyc": { "keyx": "valuex",
+                              "keyy": "valuey",
+                              "keyz": "valuez"
+                            }
+                   }
+           }
+print(our_dict3)
+our_dict3 = capitalize_values_recursively(our_dict3)
+print(our_dict3)
+```
 
 ## Summary
 
-
+Functions are an incredibly powerful tool for reuse of chunks of code. Even for simple projects it is worth getting into the habit of using them, so that as your projects get more complex, you'll have good habits established. Talking of more complex project, let's take a run at the scraping lab!
